@@ -1,7 +1,11 @@
 package ayush.ggv.groovebox
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -70,6 +74,8 @@ import androidx.compose.ui.unit.fontscaling.MathUtils.lerp
 import androidx.compose.ui.unit.sp
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import ayush.ggv.groovebox.notification.MusicService
+import ayush.ggv.groovebox.notification.MusicService.Companion.CHANNEL_ID
 import ayush.ggv.groovebox.ui.theme.GrooveBoxTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
@@ -83,7 +89,18 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService(Intent(this, MusicService::class.java))
         player = ExoPlayer.Builder(this).build()
+
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            "Music Service Channel",
+            NotificationManager.IMPORTANCE_LOW
+        )
+        val manager = getSystemService(NotificationManager::class.java)
+        manager.createNotificationChannel(channel)
+
+
         enableEdgeToEdge()
         setContent {
             GrooveBoxTheme {
@@ -91,6 +108,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
                     val uiController = rememberSystemUiController()
                     val colors = listOf(
                         Color(0xFF6200EE),
@@ -409,6 +427,14 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
+    override fun onBackPressed() {
+        // Define your custom back button behavior here
+        if (player.isPlaying) {
+            player.pause()
+        }
+        super.onBackPressed()
     }
 }
 

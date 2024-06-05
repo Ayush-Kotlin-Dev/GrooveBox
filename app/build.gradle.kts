@@ -66,6 +66,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("androidx.media:media:1.4.3")
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
     implementation ("androidx.media3:media3-exoplayer:1.3.1")
 }
