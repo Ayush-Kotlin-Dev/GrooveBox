@@ -259,7 +259,7 @@ class MainActivity : ComponentActivity() {
                     var percentReached = currentPosition.value.toFloat() / (if(totalDuration.value > 0) totalDuration.value else 0).toFloat()
 
                     if(percentReached.isNaN()){
-                       percentReached = 0f
+                        percentReached = 0f
                     }
 
                     Box(

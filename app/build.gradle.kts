@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
+
 }
 
 android {
@@ -58,7 +60,6 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,7 +67,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation("androidx.media:media:1.4.3")
+    implementation("androidx.media:media:1.7.0")
+    implementation ("androidx.compose.material:material:1.6.7")
     implementation ("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
     implementation ("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("io.github.raamcosta.compose-destinations:core:1.8.38-beta")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.8.38-beta")
+    implementation("com.exyte:animated-navigation-bar:1.0.0")
+
 }
